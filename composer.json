@@ -1,0 +1,44 @@
+{
+	"name": "samasend/laravel-needs-auto-rehash",
+	"description": "Automate the common password `Auth::needsRehash` routine using built-in event",
+	"type": "library",
+	"keywords": ["laravel", "password", "rehash", "hash", "needsRehash"],
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "SamAsEnd",
+			"email": "4sam21@gmail.com"
+		}
+	],
+	"require": {
+		"php": "^7.2"
+	},
+	"require-dev": {
+		"orchestra/testbench": "~3.6.7 || ~3.7.8 || ~3.8.6 || ^4.8 || ^5.2 || ^6.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"SamAsEnd\\NeedsAutoRehash\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"SamAsEnd\\NeedsAutoRehash\\Tests\\": "tests/"
+		}
+	},
+	"config": {
+		"sort-packages": true
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "1.0-dev"
+		},
+		"laravel": {
+			"providers": [
+				"SamAsEnd\\NeedsAutoRehash\\RehashServiceProvider"
+			]
+		}
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true
+}
