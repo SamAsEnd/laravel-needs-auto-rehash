@@ -3,6 +3,8 @@
 
 namespace SamAsEnd\NeedsAutoRehash;
 
+use Illuminate\Auth\Events\Attempting;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
 class RehashServiceProvider extends ServiceProvider
@@ -24,6 +26,6 @@ class RehashServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        Event::listen(Attempting::class, FromAttemptPasswordReHasher::class);
     }
 }
