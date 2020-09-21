@@ -16,6 +16,11 @@ or simply want to upgrade the `cost` factor of `bcrypt`; your changes will only 
 
 You have to implement a common routine task to upgrade users' password hash by checking `Hash::needsRehash` whenever the user provides a valid credential.
 
+Prerequisites
+-------------
+ - **PHP** 7.2 or greater.
+ - **Laravel** 6.x || 7.x || 8.x
+
 Installation
 ------------
 ```bash
