@@ -85,7 +85,7 @@ class FromAttemptPasswordReHasher
 
     protected function passwordNeedsRehash(Authenticatable $user)
     {
-        return $this->hash->needsRehash($user->getAuthPassword());
+        return $this->hash->needsRehash($user->getAuthPassword(), $this->getHashingOptions());
     }
 
     protected function passwordUpdateRehash(Authenticatable $user, $password)
@@ -100,5 +100,12 @@ class FromAttemptPasswordReHasher
         return
             $this->getDefaultUserProvider() ??
             $this->config->get('auth.guards.'.$guard.'.provider');
+    }
+
+    protected function getHashingOptions()
+    {
+        $driver = $this->config->get('hashing.driver');
+
+        return $this->config->get('hashing.'.$driver);
     }
 }
