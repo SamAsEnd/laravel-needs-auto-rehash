@@ -5,12 +5,12 @@ This package automates the common password [`Hash::needsRehash`](https://laravel
 
 Use case
 --------
-When a user register, Laravel uses `bcrypt` algorithm with a cost factor of `10` to password hash.
+When a user register, Laravel uses `bcrypt` algorithm with a cost factor of `10` to hash passwords.
 
 The ~~problem~~ is when you change [the default hashing algorithm](https://github.com/laravel/laravel/blob/master/config/hashing.php#L18) or
 when Laravel eventually changes [the default algorithm](https://github.com/laravel/framework/blob/master/src/Illuminate/Hashing/HashManager.php#L95) to `argon2i`
 or PHP recommended [`PASSWORD_DEFAULT` constant](https://www.php.net/manual/en/password.constants.php) changes, and you want to keep up
-or simply want to upgrade the `cost` factor of `bcrypt`, your changes will only be reflected on **newly registered users** or when **existing users change their password**.
+or simply want to upgrade the `cost` factor of `bcrypt`; your changes will only be reflected on **newly registered users** or when **existing users change their password**.
 
 You have to implement a common routine task to upgrade users' password hash by checking `Hash::needsRehash` whenever the user provides a valid credential.
 
