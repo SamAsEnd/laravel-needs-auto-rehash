@@ -29,7 +29,7 @@ class FromAttemptPasswordReHasherTest extends TestCase
 
         try {
             Auth::guard('web')->attempt([
-                'email' => '4sam21@gmail.com',
+                'email'    => '4sam21@gmail.com',
                 'password' => 'password',
             ]);
 
@@ -49,8 +49,8 @@ class FromAttemptPasswordReHasherTest extends TestCase
         config([
             'auth.providers.users' => [
                 'driver' => 'database',
-                'table' => 'users',
-            ]
+                'table'  => 'users',
+            ],
         ]);
 
         $this->testPasswordUpdateRehash();
@@ -88,30 +88,30 @@ class FromAttemptPasswordReHasherTest extends TestCase
     public function testPasswordUpdateRehash($table = 'users', $guard = 'web')
     {
         DB::table($table)->insert([
-            'name' => 'Samson Endale',
-            'email' => '4sam21@gmail.com',
+            'name'     => 'Samson Endale',
+            'email'    => '4sam21@gmail.com',
             'password' => $hash = password_hash('password', PASSWORD_BCRYPT, ['cost' => 4]),
         ]);
 
         config(['bcrypt.rounds' => 5]);
 
         $this->assertDatabaseHas($table, [
-            'name' => 'Samson Endale',
-            'email' => '4sam21@gmail.com',
-            'password' => $hash
+            'name'     => 'Samson Endale',
+            'email'    => '4sam21@gmail.com',
+            'password' => $hash,
         ]);
 
         Auth::guard($guard)->attempt([
-            'email' => '4sam21@gmail.com',
+            'email'    => '4sam21@gmail.com',
             'password' => 'password',
         ]);
 
         $this->assertDatabaseCount($table, 1);
 
         $this->assertDatabaseMissing($table, [
-            'name' => 'Samson Endale',
-            'email' => '4sam21@gmail.com',
-            'password' => $hash
+            'name'     => 'Samson Endale',
+            'email'    => '4sam21@gmail.com',
+            'password' => $hash,
         ]);
     }
 }

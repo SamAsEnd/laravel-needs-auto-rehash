@@ -1,6 +1,5 @@
 <?php
 
-
 namespace SamAsEnd\NeedsAutoRehash\Providers;
 
 use Illuminate\Auth\EloquentUserProvider;

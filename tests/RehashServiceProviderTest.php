@@ -10,8 +10,10 @@ class RehashServiceProviderTest extends TestCase
 {
     public function testServiceIsLoaded()
     {
-        $this->assertTrue($this->app->providerIsLoaded(RehashServiceProvider::class),
-            'RehashServiceProvider is not loaded');
+        $this->assertTrue(
+            $this->app->providerIsLoaded(RehashServiceProvider::class),
+            'RehashServiceProvider is not loaded'
+        );
     }
 
     public function testFromAttemptPasswordReHasherIsListening()
