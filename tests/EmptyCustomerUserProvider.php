@@ -3,7 +3,6 @@
 namespace SamAsEnd\NeedsAutoRehash\Tests;
 
 use Illuminate\Auth\DatabaseUserProvider;
-use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Contracts\Hashing\Hasher as HasherContract;
 use Illuminate\Database\ConnectionInterface;
 use SamAsEnd\NeedsAutoRehash\Providers\DatabaseUserProviderWithPasswordUpdate;

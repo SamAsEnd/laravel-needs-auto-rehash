@@ -1,6 +1,5 @@
 <?php
 
-
 namespace SamAsEnd\NeedsAutoRehash;
 
 use Illuminate\Auth\Events\Attempting;

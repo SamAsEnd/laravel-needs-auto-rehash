@@ -1,6 +1,5 @@
 <?php
 
-
 namespace SamAsEnd\NeedsAutoRehash;
 
 use Illuminate\Auth\CreatesUserProviders;
@@ -21,7 +20,7 @@ class FromAttemptPasswordReHasher
 {
     use CreatesUserProviders;
 
-    /** @var  ContainerContract */
+    /** @var ContainerContract */
     private $app;
 
     /** @var AuthContract */
@@ -73,7 +72,7 @@ class FromAttemptPasswordReHasher
     {
         $user = $this->provider->retrieveByCredentials($event->credentials);
 
-        if (! is_null($user) && $this->validCredentials($event) && $this->passwordNeedsRehash($user)) {
+        if (!is_null($user) && $this->validCredentials($event) && $this->passwordNeedsRehash($user)) {
             $this->passwordUpdateRehash($user, $event->credentials['password']);
         }
     }
