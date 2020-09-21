@@ -2,6 +2,8 @@ laravel-needs-auto-rehash ![From Ethiopia](https://img.shields.io/badge/From-Eth
 =========================
 
 [![Build Status](https://travis-ci.org/SamAsEnd/laravel-needs-auto-rehash.svg?branch=master)](https://travis-ci.org/SamAsEnd/laravel-needs-auto-rehash)
+[![StyleCI](https://github.styleci.io/repos/297123581/shield?branch=master)](https://github.styleci.io/repos/297123581?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/SamAsEnd/laravel-needs-auto-rehash/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/SamAsEnd/laravel-needs-auto-rehash/?branch=master)
 
 This package automates the common password [`Hash::needsRehash`](https://laravel.com/docs/8.x/hashing#basic-usage) routine by hooking into the [built-in event system](https://laravel.com/docs/8.x/authentication#events).
 
