@@ -3,43 +3,57 @@
 
 namespace SamAsEnd\NeedsAutoRehash;
 
+use Illuminate\Auth\CreatesUserProviders;
 use Illuminate\Auth\DatabaseUserProvider;
 use Illuminate\Auth\EloquentUserProvider;
 use Illuminate\Auth\Events\Attempting;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Contracts\Auth\Factory;
-use Illuminate\Contracts\Auth\UserProvider;
+use Illuminate\Contracts\Auth\Factory as AuthContract;
+use Illuminate\Contracts\Config\Repository as ConfigContract;
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Illuminate\Contracts\Container\Container;
-use Illuminate\Contracts\Hashing\Hasher;
+use Illuminate\Contracts\Container\Container as ContainerContract;
+use Illuminate\Contracts\Hashing\Hasher as HashContract;
 use SamAsEnd\NeedsAutoRehash\Providers\DatabaseUserProviderWithPasswordUpdate;
 use SamAsEnd\NeedsAutoRehash\Providers\EloquentUserProviderWithPasswordUpdate;
 use SamAsEnd\NeedsAutoRehash\Providers\ProviderWithPasswordUpdate;
 
 class FromAttemptPasswordReHasher
 {
+    use CreatesUserProviders;
+
+    /** @var  ContainerContract */
+    private $app;
+
+    /** @var AuthContract */
+    protected $auth;
+
+    /** @var HashContract */
+    private $hash;
+
+    /** @var ConfigContract */
+    private $config;
+
     /** @var ProviderWithPasswordUpdate */
     protected $provider;
 
-    /** @var Factory */
-    protected $auth;
-
-    /** @var Container */
-    private $container;
-
-    /** @var Hasher */
-    private $hasher;
-
-    public function __construct(Container $container, UserProvider $provider, Factory $auth, Hasher $hasher)
-    {
-        $this->container = $container;
-        $this->provider = $this->extendsWithPasswordUpdate($provider);
+    public function __construct(
+        ContainerContract $container,
+        AuthContract $auth,
+        HashContract $hash,
+        ConfigContract $config
+    ) {
+        $this->app = $container;
         $this->auth = $auth;
-        $this->hasher = $hasher;
+        $this->hash = $hash;
+        $this->config = $config;
+
+        $this->provider = $this->getUserProviderWithPasswordUpdate();
     }
 
-    protected function extendsWithPasswordUpdate(UserProvider $provider): ProviderWithPasswordUpdate
+    protected function getUserProviderWithPasswordUpdate(): ProviderWithPasswordUpdate
     {
+        $provider = $this->createUserProvider($this->getUserProviderName());
+
         if ($provider instanceof DatabaseUserProvider) {
             return new DatabaseUserProviderWithPasswordUpdate($provider);
         }
@@ -49,9 +63,9 @@ class FromAttemptPasswordReHasher
         }
 
         try {
-            return $this->container->make(ProviderWithPasswordUpdate::class);
+            return $this->app->make(ProviderWithPasswordUpdate::class);
         } catch (BindingResolutionException $e) {
-            throw new UnexpectedProviderException(get_class($this->provider).' is not expected.', $e);
+            throw new UnexpectedProviderException('ProviderWithPasswordUpdate could not be found.', $e);
         }
     }
 
@@ -71,11 +85,20 @@ class FromAttemptPasswordReHasher
 
     protected function passwordNeedsRehash(Authenticatable $user)
     {
-        return $this->hasher->needsRehash($user->getAuthPassword());
+        return $this->hash->needsRehash($user->getAuthPassword());
     }
 
     protected function passwordUpdateRehash(Authenticatable $user, $password)
     {
         $this->provider->updatePassword($user, $password);
+    }
+
+    protected function getUserProviderName()
+    {
+        $guard = $this->config->get('auth.defaults.guard');
+
+        return
+            $this->getDefaultUserProvider() ??
+            $this->config->get('auth.guards.'.$guard.'.provider');
     }
 }
