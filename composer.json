@@ -11,10 +11,10 @@
 		}
 	],
 	"require": {
-		"php": "^7.2",
-		"illuminate/auth": "^6.0|^7.0|^8.0",
-		"illuminate/contracts": "^6.0|^7.0|^8.0",
-		"illuminate/support": "^6.0|^7.0|^8.0"
+		"php": "^7.2|^8.0.2",
+		"illuminate/auth": "^6.0|^7.0|^8.0|^9.0",
+		"illuminate/contracts": "^6.0|^7.0|^8.0|^9.0",
+		"illuminate/support": "^6.0|^7.0|^8.0|^9.0"
 	},
 	"require-dev": {
 		"orchestra/testbench": "~3.6.7 || ~3.7.8 || ~3.8.6 || ^4.8 || ^5.2 || ^6.0"
