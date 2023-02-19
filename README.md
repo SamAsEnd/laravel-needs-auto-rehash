@@ -23,7 +23,7 @@ You have to implement a common routine task to upgrade users' password hash by c
 Prerequisites
 -------------
  - **PHP** 7.2 or greater and 8.0.2 or greater
- - **Laravel** 6.x || 7.x || 8.x || 9.x
+ - **Laravel** 6.x || 7.x || 8.x || 9.x || 10.x
 
 Installation
 ------------
